@@ -79,12 +79,11 @@ def download(bvid):
     video_dir = '/Users/xiangri/bi_video/{}'.format(title)
     if not os.path.exists(video_dir):
         os.mkdir(video_dir)
-
-    for p in video_info['pages']:
+    for i, p in enumerate(video_info['pages']):
         cid = p['cid']
         part = p['part']
         durl = get_play_url(bvid, cid)
-        file_prefix = '{}/{}'.format(video_dir, part)
+        file_prefix = '{}/p{}_{}'.format(video_dir, i, part)
         # '/Users/xiangri/bi_video/{}_{}.flv'
         download_video(file_prefix, durl)
 
@@ -92,7 +91,7 @@ def download(bvid):
 
 if __name__ == "__main__":
     # pass
-    bvid = 'BV1CF411b7g1'
+    bvid = 'BV1N44y1e734'
     # cid = '448981745'
     # durl = get_play_url(bvid, cid)
     # download_video(bvid, durl)
