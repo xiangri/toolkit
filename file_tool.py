@@ -95,6 +95,36 @@ class Main(object):
         # classify_files(file_list_path, src_dir_path, dst_dir_path)
         classify_files(file_set, src_dir, dst_dir)
     
+    @staticmethod
+    def mv_files(target_file_set, src_dir, dst_dir):
+        target_list = read_file(target_file_set)
+        if not os.path.exists(dst_dir):
+            os.mkdir(dst_dir)
+        print("target_list:")
+        for f in target_list:
+            print(f)
+        print(len(target_list))
+        print("\n\nstart mv:\n\n")
+        count = 0
+        for root, dirs, files in os.walk(src_dir):
+            for f in files:
+                for target in target_list:
+                    src_f = os.path.join(root, f)
+                    # 如果src目录下包含dst_dir则跳过
+                    if src_f.startswith(dst_dir):
+                        continue
+                    if target.strip() and target.strip() in f:
+                        try:
+                            shutil.copy2(src_f, dst_dir)
+                            print("copy {} to {}".format(src_f, dst_dir))
+                            count += 1
+                            break
+                        except:
+                            print("failed copy file: ", src_f)
+
+        print("mv finished, the number of successes was {}".format(count))
+
+    
 
     @staticmethod
     def get_file_list(dst_dir='.', need_full_path=False):
@@ -106,7 +136,7 @@ class Main(object):
         1.遍历src_dir下的所有文件，如果文件名在file_set名单中，就将该文件复制到dst_dir目录下，并且按照'【'前的名字创建文件夹分类放好
             useage : python file_tool.py classify --file_set='/Users/xiangri/Demo/z1.txt' --src_dir='/Users/xiangri/Demo/src/' --dst_dir='/Users/xiangri/Demo/result/'
         
-        2. 输出dst_dir目录下所有文件名, 可选参数：
+        2.输出dst_dir目录下所有文件名, 可选参数：
             --dst_dir, 不写dst_dir就是当前目录
             --need_full_path, 是否打印全路径，默认是False,不打印
             
@@ -118,11 +148,20 @@ class Main(object):
 
             2.3 打印指定目录下所有文件的全路径
             useage : python file_tool.py get_file_list --dst_dir='/Users/xiangri/Demo/result' --need_full_path=True
+        
+        3.遍历src_dir下的所有文件，如果文件名【包含】在target_file_set名单中，就将该文件复制到dst_dir目录下
+            useage: python file_tool.py mv_files --target_file_set='target.txt' --src_dir='/Users/xiangri/github/toolkit' --dst_dir='/Users/xiangri/github/toolkit/test'
+
+            easy useage:  python file_tool.py mv_files target.txt /Users/xiangri/github/toolkit /Users/xiangri/github/toolkit/test
         """
         print(text)
 
 
 if __name__ == '__main__':
     # python file_tool.py help
-    fire.Fire(Main)
+    # fire.Fire(Main)
+    target_file_set = r"target.txt"
+    src_dir = r"c:\sss"
+    dst_dir = r"C:\sss"
+    Main.mv_files(target_file_set, src_dir, dst_dir)
 
