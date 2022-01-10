@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from re import T
+import sys
 import shutil
 from numpy.core.fromnumeric import transpose
 import openpyxl
@@ -45,6 +45,8 @@ def merge(src_dir, result_file='all.xlsx', not_null_columns=None,):
                 new_wb[sheet_name] = []
                 print("find sheet ", sheet_name)
             new_wb[sheet_name].append(wb[sheet_name])
+        
+        
     print("load all workbook finished, start save result to ", result_file)
     with pd.ExcelWriter(result_file) as writer:
         for sheet_name, sheet_value_list in new_wb.items():
@@ -83,16 +85,18 @@ def merge2(src_dir, result_file='all.xlsx', not_null_columns=None,):
             new_wb[sheet_name].append(wb[sheet_name])
     print("load all workbook finished, start save result to ", result_file)
     # wb = xlrd.open_workbook(workbook_files[0], formatting_info=True)
-    # app = xw.App(visible=False)
-    app = xw.App(spec='wpsoffice')
+    app = xw.App(visible=False)
+    # app = xw.App(spec='wpsoffice')
 
     app.display_alerts = False
     app.screen_updating = False
     # wb = xw.Book(workbook_files[0])
-    wb = app.books.open(workbook_files[0])
+    # wb = app.books.open(workbook_files[0])
+    wb = app.books(workbook_files[0])
+
     for sheet_name, sheet_value_list in new_wb.items():
         df = pd.concat(sheet_value_list, axis=0)
-        wb.sheets[sheet_name].options(transpose=True).value = df
+        wb.sheets[sheet_name].value = df
     wb.save(result_file)
     wb.close()
     app.quit()
@@ -100,7 +104,15 @@ def merge2(src_dir, result_file='all.xlsx', not_null_columns=None,):
 
 
 if __name__ == '__main__':
-    src_dir = r'/Users/xiangri/github/toolkit/excel'
-    result_file = r'all—2.xlsx'
-    # merge(src_dir, result_file)
-    merge2(src_dir, result_file)
+    """
+    python merge_excel.py "c:\ss\ss" "all.xlsx"
+
+    cd "c:\代码目录" & python merge_excel.py "c:\ss\ss" "all.xlsx"
+    """
+    print(sys.argv)
+    # src_dir = r'/Users/xiangri/github/toolkit/excel'
+    # result_file = r'all—2.xlsx'
+    src_dir = r'{}'.format(sys.argv[1])
+    result_file = r'{}'.format(sys.argv[2])
+    merge(src_dir, result_file)
+    # merge2(src_dir, result_file)

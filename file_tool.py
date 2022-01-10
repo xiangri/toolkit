@@ -9,10 +9,9 @@
 # @Notes   :  
 # @Author  :  ri.xiang
 # @Date    :  2021/12/8 11:16 上午
+import sys
 import os
 import shutil
-import fire
-from fire.core import Fire
 
 
 def read_file(file_path):
@@ -159,9 +158,13 @@ class Main(object):
 
 if __name__ == '__main__':
     # python file_tool.py help
-    # fire.Fire(Main)
-    target_file_set = r"target.txt"
-    src_dir = r"c:\sss"
-    dst_dir = r"C:\sss"
+    print(sys.argv)
+
+    # target_file_set = r"target.txt"
+    # src_dir = r"c:\sss"
+    # dst_dir = r"C:\sss"
+    target_file_set = r'{}'.format(sys.argv[1])
+    src_dir = r'{}'.format(sys.argv[2])
+    dst_dir = r'{}'.format(sys.argv[3])
     Main.mv_files(target_file_set, src_dir, dst_dir)
 

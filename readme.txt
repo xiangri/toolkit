@@ -1,15 +1,15 @@
 ######## 功能列表 ######
 1. 对src文件夹中所有文件，如果名字【包含】target.txt里的项，就复制到dst文件夹里:
-    cd "C:\Users\Tracy JT Zhang\Desktop\test" & python file_tool.py "target.txt" "c:\src文件夹" "c:\dst文件夹"
+    cd "C:\Users\Tracy JT Zhang\Desktop\test" ; python file_tool.py "target.txt" "c:\src文件夹" "c:\dst文件夹"
 
 2. 把src文件夹里所有工作簿里的所有同名的表合并到一个工作簿里: 
-    cd "C:\Users\Tracy JT Zhang\Desktop\test" & python merge_excel.py "c:\src文件夹" "合并结果.xlsx"
+    cd "C:\Users\Tracy JT Zhang\Desktop\test" ; python merge_excel.py "c:\src文件夹" "合并结果.xlsx"
 
 3. 列出来src文件夹下所有文件名:
     3.1 只打印文件名
-        cd "C:\Users\Tracy JT Zhang\Desktop\test" & python print_files.py "c:\src文件夹"
+        cd "C:\Users\Tracy JT Zhang\Desktop\test" ; python print_files.py "c:\src文件夹"
     3.2 打印文件的全路径
-        cd "C:\Users\Tracy JT Zhang\Desktop\test" & python print_files.py "c:\src文件夹" 1
+        cd "C:\Users\Tracy JT Zhang\Desktop\test" ; python print_files.py "c:\src文件夹" 1
 
 
 ######### Tips #########
