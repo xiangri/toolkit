@@ -11,6 +11,12 @@
     3.2 打印文件的全路径
         cd "C:\Users\Tracy JT Zhang\Desktop\test" ; python print_files.py "c:\src文件夹" 1
 
+####### powershell命令 ######
+1. 解压zip包到dst文件夹下
+    Expand-Archive -Path "E:\src.zip" -DestinationPath "F:\dst文件夹"
+    1.1 批量解压src文件夹下的所有zip包
+    cd "c:\src文件夹" ; ls | Expand-Archive -Path
+
 
 ######### Tips #########
 
